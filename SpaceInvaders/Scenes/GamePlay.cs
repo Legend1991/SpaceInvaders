@@ -42,7 +42,7 @@ namespace SpaceInvaders.Scenes
         private void OnBlasterShot(LaserBeam laserBeam)
         {
             AddRigidbody(laserBeam);
-            var laserBeamEntity = new Raylib.Entity(Sprites.Spaceship, laserBeam.Collider);
+            var laserBeamEntity = new Raylib.Entity(Sprites.LaserBeam, laserBeam.Collider);
             display.AddEntity(laserBeamEntity);
         }
     }
