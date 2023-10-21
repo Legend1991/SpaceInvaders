@@ -3,8 +3,7 @@
     public interface IDisplay
     {
         void Render();
-        void AddEntity(string spriteFileName, CellCollider collider);
-        CellCollider AddEntity(string spriteFileName);
+        void AddEntity(IEntity entity);
 
         int Width { get; }
         int Height { get; }

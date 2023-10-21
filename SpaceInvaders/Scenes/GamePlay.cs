@@ -1,6 +1,5 @@
 ﻿using SpaceInvaders.Core;
 using SpaceInvaders.Models;
-using SpaceInvaders.Raylib;
 
 namespace SpaceInvaders.Scenes
 {
@@ -14,14 +13,18 @@ namespace SpaceInvaders.Scenes
         public GamePlay(IDisplay display, ITimestep timestep) : base(display)
         {
             // TODO: rid off from Textures and Sprites dependencies
-            var beamMask = Textures.Mask(Sprites.LaserBeam);
-            var spaceshipCollider = display.AddEntity(Sprites.Spaceship);
+            var laserBeamMask = Raylib.Textures.Mask(Sprites.LaserBeam);
+            var spaceshipMask = Raylib.Textures.Mask(Sprites.Spaceship);
+            var spaceshipCollider = new CellCollider(spaceshipMask);
+            var spaceshipEntity = new Raylib.Entity(Sprites.Spaceship, spaceshipCollider);
+
+            display.AddEntity(spaceshipEntity);
 
             spaceshipCollider.Y = 600;
             spaceshipCollider.X = display.Width / 2;
 
             spaceship = new Spaceship(spaceshipCollider, 0, display.Width);
-            blaster = new Blaster(beamMask, spaceshipCollider, GunSlot.TopCenter, timestep);
+            blaster = new Blaster(laserBeamMask, spaceshipCollider, GunSlot.TopCenter, timestep);
 
             blaster.LaserBeamEmited += OnBlasterShot;
         }
@@ -39,7 +42,8 @@ namespace SpaceInvaders.Scenes
         private void OnBlasterShot(LaserBeam laserBeam)
         {
             AddRigidbody(laserBeam);
-            display.AddEntity(Sprites.LaserBeam, laserBeam.Collider);
+            var laserBeamEntity = new Raylib.Entity(Sprites.Spaceship, laserBeam.Collider);
+            display.AddEntity(laserBeamEntity);
         }
     }
 }

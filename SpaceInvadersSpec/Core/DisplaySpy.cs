@@ -9,13 +9,8 @@ namespace SpaceInvadersSpec.Core
         public int Width => 0;
         public int Height => 0;
 
-        public void AddEntity(string spriteFileName, CellCollider collider)
+        public void AddEntity(IEntity entity)
         {
-        }
-
-        public CellCollider AddEntity(string spriteFileName)
-        {
-            throw new NotImplementedException();
         }
 
         public void Render()

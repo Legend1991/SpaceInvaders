@@ -16,22 +16,11 @@ namespace SpaceInvaders.Raylib
             RaylibCS.InitWindow(Width, Height, "SpaceInvaders");
         }
 
-        public CellCollider AddEntity(string spriteFileName)
+        public void AddEntity(IEntity entity)
         {
-            var mask = Textures.Mask(spriteFileName);
-            var collider = new CellCollider(mask);
-
-            AddEntity(spriteFileName, collider);
-
-            return collider;
-        }
-
-        public void AddEntity(string spriteFileName, CellCollider collider)
-        {
-            var entity = new Entity(spriteFileName, collider);
-            entity.Init();
-
-            entities.Add(entity);
+            var raylibEntity = (Entity)entity;
+            raylibEntity.Init();
+            entities.Add(raylibEntity);
         }
 
         public void Render()
