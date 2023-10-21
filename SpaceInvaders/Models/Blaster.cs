@@ -7,11 +7,10 @@ namespace SpaceInvaders.Models
         TopCenter, BottomCenter
     }
 
-    public class Blaster(bool[,] laserBeamMask, CellCollider attachment, GunSlot gunSlot, ITimestep timestep)
+    public class Blaster(bool[,] laserBeamMask, CellCollider attachment, GunSlot gunSlot) : IRigidbody
     {
         public event Action<LaserBeam>? LaserBeamEmited;
-        private readonly double reloadTime = 400;
-        private double lastShootingTime = 0;
+        private int ticksToReload = 0;
 
         public void Trigger()
         {
@@ -19,18 +18,13 @@ namespace SpaceInvaders.Models
             {
                 var beam = EmitLaserBeam();
                 LaserBeamEmited?.Invoke(beam);
+                ticksToReload = 40;
             }
         }
 
         public bool Reloaded()
         {
-            var now = timestep.Elapsed();
-            if (now - lastShootingTime >= reloadTime)
-            {
-                lastShootingTime = now;
-                return true;
-            }
-            return false;
+            return ticksToReload <= 0;
         }
 
         private LaserBeam EmitLaserBeam()
@@ -43,11 +37,9 @@ namespace SpaceInvaders.Models
             return new LaserBeam(collider, direction);
         }
 
-        public double ReloadingProgress()
+        public void Update()
         {
-            var now = timestep.Elapsed();
-            var delta = Math.Clamp(now - lastShootingTime, 0, reloadTime);
-            return delta / reloadTime;
+            ticksToReload = Math.Clamp(ticksToReload - 1, 0, ticksToReload);
         }
     }
 }

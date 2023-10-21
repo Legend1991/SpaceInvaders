@@ -37,7 +37,7 @@ namespace SpaceInvaders.Raylib
             RaylibCS.EndDrawing();
         }
 
-        public int Width  { get => 700; }
+        public int Width  { get => 755; }
         public int Height { get => 750; }
     }
 }
