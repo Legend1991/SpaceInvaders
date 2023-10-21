@@ -30,10 +30,15 @@ namespace SpaceInvaders.Models
         private LaserBeam EmitLaserBeam()
         {
             var collider = new CellCollider(laserBeamMask);
-            collider.Y = attachment.Y;
+            collider.Y = gunSlot == GunSlot.TopCenter
+                ? attachment.Y
+                : attachment.Y + attachment.Height - collider.Height;
             collider.X = attachment.X + attachment.Width / 2 - collider.Width / 2;
 
-            var direction = gunSlot == GunSlot.TopCenter ? VDirection.Up : VDirection.Down;
+            var direction = gunSlot == GunSlot.TopCenter
+                ? VDirection.Up
+                : VDirection.Down;
+
             return new LaserBeam(collider, direction);
         }
 

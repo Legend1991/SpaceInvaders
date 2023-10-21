@@ -12,7 +12,7 @@
 
         public void FixedUpdate()
         {
-            foreach (var body in rigidbodies)
+            foreach (var body in rigidbodies.ToList())
             {
                 body.Update();
             }

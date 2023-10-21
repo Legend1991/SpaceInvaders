@@ -9,7 +9,7 @@ namespace SpaceInvaders.Models
 
     public class LaserBeam(CellCollider collider, VDirection direction) : IRigidbody
     {
-        private readonly int speed = direction == VDirection.Down ? 10 : -10;
+        private readonly int speed = direction == VDirection.Down ? 7 : -7;
 
         public void Update()
         {

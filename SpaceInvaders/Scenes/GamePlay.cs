@@ -26,7 +26,14 @@ namespace SpaceInvaders.Scenes
             };
         }
 
-        private void OnBlasterShot(LaserBeam laserBeam)
+        private void OnSpaceshipBlasterShot(LaserBeam laserBeam)
+        {
+            AddRigidbody(laserBeam);
+            var laserBeamEntity = new Raylib.Entity(Sprites.LaserBeam, laserBeam.Collider);
+            display.AddEntity(laserBeamEntity);
+        }
+
+        private void OnAlienBlasterShot(LaserBeam laserBeam)
         {
             AddRigidbody(laserBeam);
             var laserBeamEntity = new Raylib.Entity(Sprites.LaserBeam, laserBeam.Collider);
@@ -37,7 +44,7 @@ namespace SpaceInvaders.Scenes
         {
             var laserBeamMask     = Raylib.Textures.Mask(Sprites.LaserBeam);
             var spaceshipMask     = Raylib.Textures.Mask(Sprites.Spaceship);
-            var spaceshipCollider = new CellCollider(spaceshipMask) { X = display.Width / 2, Y = 600 };
+            var spaceshipCollider = new CellCollider(spaceshipMask) { X = display.Width / 2, Y = 700 };
             var spaceshipEntity   = new Raylib.Entity(Sprites.Spaceship, spaceshipCollider);
 
             display.AddEntity(spaceshipEntity);
@@ -45,7 +52,7 @@ namespace SpaceInvaders.Scenes
             spaceship = new Spaceship(spaceshipCollider, 0, display.Width);
             blaster   = new Blaster(laserBeamMask, spaceshipCollider, GunSlot.TopCenter);
 
-            blaster.LaserBeamEmited += OnBlasterShot;
+            blaster.LaserBeamEmited += OnSpaceshipBlasterShot;
 
             AddRigidbody(blaster);
         }
@@ -70,13 +77,18 @@ namespace SpaceInvaders.Scenes
 
         private void CreateAlien(string spriteFileName, int x, int y)
         {
-            var mask     = Raylib.Textures.Mask(spriteFileName);
-            var collider = new CellCollider(mask) { X = x, Y = y };
-            var entity   = new Raylib.Entity(spriteFileName, collider);
-            var alien    = new Alien(collider);
+            var laserBeamMask = Raylib.Textures.Mask(Sprites.LaserBeam);
+            var alienMask     = Raylib.Textures.Mask(spriteFileName);
+            var alienCollider = new CellCollider(alienMask) { X = x, Y = y };
+            var alienEntity   = new Raylib.Entity(spriteFileName, alienCollider);
+            var blaster       = new Blaster(laserBeamMask, alienCollider, GunSlot.BottomCenter);
+            var alien         = new Alien(alienCollider, blaster);
 
+            blaster.LaserBeamEmited += OnAlienBlasterShot;
+
+            AddRigidbody(blaster);
             AddRigidbody(alien);
-            display.AddEntity(entity);
+            display.AddEntity(alienEntity);
         }
     }
 }
