@@ -20,13 +20,13 @@ namespace SpaceInvaders.Models
                 stepsCount = 0;
             }
 
+            collider.X += moveRight ? speed : -speed;
+            stepsCount++;
+
             if (random.NextDouble() <= 0.0005)
             {
                 blaster.Trigger();
             }
-
-            collider.X += moveRight ? speed : -speed;
-            stepsCount++;
         }
     }
 }

@@ -4,5 +4,6 @@
     {
         void FixedUpdate();
         void AddRigidbody(IRigidbody body);
+        void RemoveRigidbody(IRigidbody body);
     }
 }

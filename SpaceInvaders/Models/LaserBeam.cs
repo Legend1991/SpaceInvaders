@@ -13,10 +13,7 @@ namespace SpaceInvaders.Models
 
         public void Update()
         {
-            if (collider.Y + collider.Width > 0)
-            {
-                collider.Y += speed;
-            }
+            collider.Y += speed;
         }
 
         public CellCollider Collider

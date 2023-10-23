@@ -10,6 +10,11 @@
             rigidbodies.Add(body);
         }
 
+        public void RemoveRigidbody(IRigidbody body)
+        {
+            rigidbodies.Remove(body);
+        }
+
         public void FixedUpdate()
         {
             foreach (var body in rigidbodies.ToList())
