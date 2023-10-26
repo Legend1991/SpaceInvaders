@@ -3,19 +3,22 @@ using SpaceInvaders.Models;
 
 namespace SpaceInvaders.Raylib.Factories
 {
-    public class SpaceshipFactory(IDisplay display) : Models.Factories.SpaceshipFactory
+    public class SpaceshipFactory(Display display) : Models.Factories.SpaceshipFactory
     {
         private readonly BulletFactory bulletFactory = new(display);
 
-        public Spaceship Make(int x, int y, int maxY)
+        public Spaceship Make(float x, float y)
         {
             var mask = Textures.Mask(Sprites.Spaceship);
-            var collider = new CellCollider(mask) { X = x, Y = y };
-            var entity = new Entity(Sprites.Spaceship, collider);
+            var collider = new CellCollider(mask) {
+                X = Convert.ToInt32(display.Width * x),
+                Y = Convert.ToInt32(display.Height * y)
+            };
+            var sprite = new Sprite(Sprites.Spaceship, collider);
 
-            display.AddEntity(entity);
+            display.Add(sprite);
 
-            var spaceship = new Spaceship(collider, 0, maxY)
+            var spaceship = new Spaceship(collider, 0, display.Width)
             {
                 Blaster = new Blaster(bulletFactory, collider, GunSlot.TopCenter)
             };

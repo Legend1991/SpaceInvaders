@@ -7,6 +7,6 @@
 
     public interface AlienFactory
     {
-        Alien Make(AlienType type, int x, int y);
+        Alien Make(AlienType type, float x, float y);
     }
 }

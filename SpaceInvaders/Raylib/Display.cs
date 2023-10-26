@@ -8,19 +8,19 @@ namespace SpaceInvaders.Raylib
 {
     public class Display : IDisplay
     {
-        private readonly List<IEntity> entities = new();
+        private readonly List<Sprite> sprites = new();
 
         public Display()
         {
             RaylibCS.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
-            RaylibCS.InitWindow(Width, Height, "SpaceInvaders");
+            RaylibCS.InitWindow(Width, Height, "Space Invaders");
+            RaylibCS.SetWindowIcon(RaylibCS.LoadImage(Sprites.Faeyan));
         }
 
-        public void AddEntity(IEntity entity)
+        public void Add(Sprite sprite)
         {
-            var raylibEntity = (Entity)entity;
-            raylibEntity.Init();
-            entities.Add(raylibEntity);
+            sprite.Init();
+            sprites.Add(sprite);
         }
 
         public void Render()
@@ -28,9 +28,9 @@ namespace SpaceInvaders.Raylib
             RaylibCS.BeginDrawing();
             RaylibCS.ClearBackground(Color.BLACK);
 
-            foreach (var entity in entities)
+            foreach (var sprite in sprites)
             {
-                entity.Draw();
+                sprite.Draw();
             }
 
             RaylibCS.DrawFPS(0, 0);

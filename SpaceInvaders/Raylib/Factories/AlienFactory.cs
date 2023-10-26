@@ -4,7 +4,7 @@ using SpaceInvaders.Models.Factories;
 
 namespace SpaceInvaders.Raylib.Factories
 {
-    public class AlienFactory(IDisplay display) : Models.Factories.AlienFactory
+    public class AlienFactory(Display display) : Models.Factories.AlienFactory
     {
         private readonly BulletFactory bulletFactory = new(display);
         private readonly Dictionary<AlienType, string> sprites = new()
@@ -14,13 +14,17 @@ namespace SpaceInvaders.Raylib.Factories
             { AlienType.Peleng, Sprites.Peleng }
         };
 
-        public Alien Make(AlienType type, int x, int y)
+        public Alien Make(AlienType type, float x, float y)
         {
             var mask = Textures.Mask(sprites[type]);
-            var collider = new CellCollider(mask) { X = x, Y = y };
-            var entity = new Entity(sprites[type], collider);
+            var collider = new CellCollider(mask)
+            {
+                X = Convert.ToInt32(display.Width * x),
+                Y = Convert.ToInt32(display.Height * y)
+            };
+            var sprite = new Sprite(sprites[type], collider);
 
-            display.AddEntity(entity);
+            display.Add(sprite);
 
             var alien = new Alien(collider)
             {

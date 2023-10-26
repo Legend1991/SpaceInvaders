@@ -25,7 +25,7 @@ namespace SpaceInvaders.Scenes
 
         private void SpawnSpaceship()
         {
-            var spaceship = spaceshipFactory.Make(display.Width / 2, 700, display.Width);
+            var spaceship = spaceshipFactory.Make(0.5f, 0.9f);
 
             AddRigidbody(spaceship.Blaster);
 
@@ -61,7 +61,7 @@ namespace SpaceInvaders.Scenes
 
         private void SpawnIntruders()
         {
-            var sprites = new AlienType[]
+            var aliens = new AlienType[]
             {
                 AlienType.Peleng, AlienType.Gaal, AlienType.Gaal, AlienType.Faeyan, AlienType.Faeyan
             };
@@ -70,14 +70,14 @@ namespace SpaceInvaders.Scenes
             {
                 for (int column = 0; column < 11; column++)
                 {
-                    int x = 75 + column * 55;
-                    int y = 110 + row * 55;
-                    SpawnAlien(sprites[row], x, y);
+                    var x = 0.115f + column * 0.07f;
+                    var y = 0.115f + row * 0.07f;
+                    SpawnAlien(aliens[row], x, y);
                 }
             }
         }
 
-        private void SpawnAlien(AlienType type, int x, int y)
+        private void SpawnAlien(AlienType type, float x, float y)
         {
             var alien = alienFactory.Make(type, x, y);
 

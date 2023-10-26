@@ -2,6 +2,6 @@
 {
     public interface SpaceshipFactory
     {
-        Spaceship Make(int x, int y, int maxY);
+        Spaceship Make(float x, float y);
     }
 }
