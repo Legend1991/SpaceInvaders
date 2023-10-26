@@ -1,14 +1,37 @@
-﻿using System.Diagnostics;
-
-namespace SpaceInvaders.Core
+﻿namespace SpaceInvaders.Core
 {
-    public class Timestep : ITimestep
+    public class Timestep(IStopwatch stopwatch)
     {
-        private readonly Stopwatch stopwatch = Stopwatch.StartNew();
+        // The fixed timestep of the physics system [50 fps]
+        private const double fixedDeltaTime = 20;
 
-        public double Elapsed()
+        private double now = 0;
+        private double lastUpdate = 0;
+        private double accumulator = 0;
+
+        public void Init()
         {
-            return stopwatch.Elapsed.TotalMilliseconds;
+            stopwatch.Start();
+            now = stopwatch.Elapsed();
+            lastUpdate = now;
+        }
+
+        public bool Tick()
+        {
+            accumulator += now - lastUpdate;
+            lastUpdate = now;
+            now = stopwatch.Elapsed();
+            return stopwatch.Running();
+        }
+
+        public bool FixedTick()
+        {
+            if (accumulator >= fixedDeltaTime)
+            {
+                accumulator -= fixedDeltaTime;
+                return true;
+            }
+            return false;
         }
     }
 }

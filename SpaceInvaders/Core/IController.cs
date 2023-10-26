@@ -3,6 +3,5 @@
     public interface IController
     {
         void Interrupt();
-        bool Quit();
     }
 }

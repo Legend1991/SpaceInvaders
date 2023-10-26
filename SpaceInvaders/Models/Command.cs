@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Models
 {
-    public enum UserCommand
+    public enum Command
     {
         MoveLeft, MoveRight, Shoot
     }

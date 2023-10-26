@@ -1,67 +1,69 @@
 ﻿using SpaceInvaders.Core;
 using SpaceInvaders.Models;
+using SpaceInvaders.Models.Factories;
 
 namespace SpaceInvaders.Scenes
 {
-    using CommandBinding = Dictionary<UserCommand, Action>;
+    using CommandBinding = Dictionary<Command, Action>;
 
     public class GamePlay : Scene
     {
-        private Spaceship spaceship;
-        private Blaster blaster;
+        private readonly SpaceshipFactory spaceshipFactory;
+        private readonly AlienFactory alienFactory;
 
-        public GamePlay(IDisplay display) : base(display)
+        private CommandBinding input = new();
+        private Score score = new();
+
+        public GamePlay(IDisplay display, SpaceshipFactory spaceshipFactory, AlienFactory alienFactory) : base(display)
         {
-            CreateSpaceship();
-            CreateAliensArmy();
+            this.spaceshipFactory = spaceshipFactory;
+            this.alienFactory = alienFactory;
+
+            SpawnSpaceship();
+            SpawnIntruders();
+        }
+
+        private void SpawnSpaceship()
+        {
+            var spaceship = spaceshipFactory.Make(display.Width / 2, 700, display.Width);
+
+            AddRigidbody(spaceship.Blaster);
+
+            input.Add(Command.MoveLeft,  spaceship.Left);
+            input.Add(Command.MoveRight, spaceship.Right);
+            input.Add(Command.Shoot,     spaceship.Blaster.Trigger);
+
+            spaceship.Blaster.OnShot += bullet =>
+            {
+                AddRigidbody(bullet);
+
+                bullet.OnHit<Alien>(alien =>
+                {
+                    score.Enroll(alien.Value);
+                    alien.Destroy();
+                });
+                bullet.OnHit<Obstacle>(obstacle => obstacle.Crumble());
+
+            };
+
+            spaceship.Destroyed += GameOver;
         }
 
         public CommandBinding CommandBinding
         {
-            get => new()
+            get => input;
+        }
+
+        private void GameOver()
+        {
+            Console.WriteLine("Game over!");
+        }
+
+        private void SpawnIntruders()
+        {
+            var sprites = new AlienType[]
             {
-                { UserCommand.MoveLeft,  spaceship.Left  },
-                { UserCommand.MoveRight, spaceship.Right },
-                { UserCommand.Shoot,     blaster.Trigger }
-            };
-        }
-
-        private void OnSpaceshipBlasterShot(LaserBeam laserBeam)
-        {
-            AddRigidbody(laserBeam);
-            var laserBeamEntity = new Raylib.Entity(Sprites.LaserBeam, laserBeam.Collider);
-            display.AddEntity(laserBeamEntity);
-        }
-
-        private void OnAlienBlasterShot(LaserBeam laserBeam)
-        {
-            AddRigidbody(laserBeam);
-            var laserBeamEntity = new Raylib.Entity(Sprites.LaserBeam, laserBeam.Collider);
-            display.AddEntity(laserBeamEntity);
-        }
-
-        private void CreateSpaceship()
-        {
-            var laserBeamMask     = Raylib.Textures.Mask(Sprites.LaserBeam);
-            var spaceshipMask     = Raylib.Textures.Mask(Sprites.Spaceship);
-            var spaceshipCollider = new CellCollider(spaceshipMask) { X = display.Width / 2, Y = 700 };
-            var spaceshipEntity   = new Raylib.Entity(Sprites.Spaceship, spaceshipCollider);
-
-            display.AddEntity(spaceshipEntity);
-
-            spaceship = new Spaceship(spaceshipCollider, 0, display.Width);
-            blaster   = new Blaster(laserBeamMask, spaceshipCollider, GunSlot.TopCenter);
-
-            blaster.LaserBeamEmited += OnSpaceshipBlasterShot;
-
-            AddRigidbody(blaster);
-        }
-
-        private void CreateAliensArmy()
-        {
-            var sprites = new string[]
-            {
-                Sprites.Alien3, Sprites.Alien2, Sprites.Alien2, Sprites.Alien1, Sprites.Alien1
+                AlienType.Peleng, AlienType.Gaal, AlienType.Gaal, AlienType.Faeyan, AlienType.Faeyan
             };
 
             for (int row = 0; row < 5; row++)
@@ -70,25 +72,25 @@ namespace SpaceInvaders.Scenes
                 {
                     int x = 75 + column * 55;
                     int y = 110 + row * 55;
-                    CreateAlien(sprites[row], x, y);
+                    SpawnAlien(sprites[row], x, y);
                 }
             }
         }
 
-        private void CreateAlien(string spriteFileName, int x, int y)
+        private void SpawnAlien(AlienType type, int x, int y)
         {
-            var laserBeamMask = Raylib.Textures.Mask(Sprites.LaserBeam);
-            var alienMask     = Raylib.Textures.Mask(spriteFileName);
-            var alienCollider = new CellCollider(alienMask) { X = x, Y = y };
-            var alienEntity   = new Raylib.Entity(spriteFileName, alienCollider);
-            var blaster       = new Blaster(laserBeamMask, alienCollider, GunSlot.BottomCenter);
-            var alien         = new Alien(alienCollider, blaster);
+            var alien = alienFactory.Make(type, x, y);
 
-            blaster.LaserBeamEmited += OnAlienBlasterShot;
-
-            AddRigidbody(blaster);
             AddRigidbody(alien);
-            display.AddEntity(alienEntity);
+            AddRigidbody(alien.Blaster);
+
+            alien.Blaster.OnShot += bullet =>
+            {
+                AddRigidbody(bullet);
+
+                bullet.OnHit<Spaceship>(spaceship => spaceship.Damage());
+                bullet.OnHit<Obstacle>(obstacle => obstacle.Crumble());
+            };
         }
     }
 }

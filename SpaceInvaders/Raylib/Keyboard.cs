@@ -1,25 +1,21 @@
 ﻿using SpaceInvaders.Core;
-using SpaceInvaders.Models;
 
 using RaylibCS = Raylib_cs.Raylib;
 using KeyboardKey = Raylib_cs.KeyboardKey;
 
 namespace SpaceInvaders.Raylib
 {
-    using KeyBinding = Dictionary<KeyboardKey, UserCommand>;
-    using CommandBinding = Dictionary<UserCommand, Action>;
-
-    public class Keyboard(CommandBinding commandBinding) : IController
+    public class Keyboard<T>(Dictionary<KeyboardKey, T> keyBinding, Dictionary<T, Action> commandBinding) : IController where T : notnull
     {
-        private readonly KeyBinding keyBinding = new()
-        {
-            { KeyboardKey.KEY_LEFT,  UserCommand.MoveLeft  },
-            { KeyboardKey.KEY_RIGHT, UserCommand.MoveRight },
-            { KeyboardKey.KEY_SPACE, UserCommand.Shoot     }
-        };
+        public event Action Quit;
 
         public void Interrupt()
         {
+            if (RaylibCS.WindowShouldClose())
+            {
+                Quit?.Invoke();
+            }
+
             foreach (var (key, command) in keyBinding)
             {
                 if (RaylibCS.IsKeyDown(key) && commandBinding.TryGetValue(command, out var action))
@@ -27,11 +23,6 @@ namespace SpaceInvaders.Raylib
                     action();
                 }
             }
-        }
-
-        public bool Quit()
-        {
-            return RaylibCS.WindowShouldClose();
         }
     }
 }

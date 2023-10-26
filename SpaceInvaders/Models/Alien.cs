@@ -2,7 +2,7 @@
 
 namespace SpaceInvaders.Models
 {
-    public class Alien(CellCollider collider, Blaster blaster) : IRigidbody
+    public class Alien(CellCollider collider) : IRigidbody
     {
         private readonly int speed = 1;
         private readonly double stepsLimit = 100;
@@ -25,8 +25,16 @@ namespace SpaceInvaders.Models
 
             if (random.NextDouble() <= 0.0005)
             {
-                blaster.Trigger();
+                Blaster?.Trigger();
             }
         }
+
+        public void Destroy()
+        {
+        }
+
+        public Blaster Blaster { get; set; }
+
+        public int Value { get => 10; }
     }
 }

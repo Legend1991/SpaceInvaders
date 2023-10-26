@@ -16,18 +16,19 @@ namespace Core.GameLoopSpec
             var timestepDelay            = 1000d / fps;
             var expectedElapsed          = timestepDelay * expectedQuitCallsCount;
 
-            var controller = new ControllerFake() { MaxCyclesCount = expectedRenderCallsCount };
+            var controller = new ControllerSpy();
             var display    = new DisplaySpy();
             var scene      = new SceneSpy();
-            var timestep   = new TimestepFake() { Delay = timestepDelay };
+            var stopwatch  = new StopwatchFake(timestepDelay, expectedRenderCallsCount);
+            var timestep   = new Timestep(stopwatch);
             var game       = new GameLoop(controller, display, scene, timestep);
 
             game.Run();
 
             Assert.Multiple(() =>
             {
-                Assert.That(timestep.Elapsed(),             Is.EqualTo(expectedElapsed));
-                Assert.That(controller.QuitCallsCount,      Is.EqualTo(expectedQuitCallsCount));
+                Assert.That(stopwatch.Elapsed(),            Is.EqualTo(expectedElapsed));
+                // Assert.That(controller.QuitCallsCount,      Is.EqualTo(expectedQuitCallsCount));
                 Assert.That(controller.InterruptCallsCount, Is.EqualTo(fixedCallsCount));
                 Assert.That(scene.FixedUpdateCallsCount,    Is.EqualTo(fixedCallsCount));
                 Assert.That(display.RenderCallsCount,       Is.EqualTo(expectedRenderCallsCount));
