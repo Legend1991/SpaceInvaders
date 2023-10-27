@@ -3,9 +3,9 @@ using SpaceInvaders.Models;
 
 namespace SpaceInvaders.Raylib.Factories
 {
-    public class SpaceshipFactory(Display display) : Models.Factories.SpaceshipFactory
+    public class SpaceshipFactory(Display display, Physics physics) : Models.Factories.SpaceshipFactory
     {
-        private readonly BulletFactory bulletFactory = new(display);
+        private readonly BulletFactory bulletFactory = new(display, physics);
 
         public Spaceship Make(float x, float y)
         {
@@ -22,6 +22,9 @@ namespace SpaceInvaders.Raylib.Factories
             {
                 Blaster = new Blaster(bulletFactory, collider, GunSlot.TopCenter)
             };
+
+            physics.Add(spaceship);
+            physics.Add(spaceship.Blaster);
 
             return spaceship;
         }

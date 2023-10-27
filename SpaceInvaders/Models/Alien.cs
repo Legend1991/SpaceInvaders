@@ -11,7 +11,7 @@ namespace SpaceInvaders.Models
         private int stepsCount = 50;
         private bool moveRight = true;
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (stepsCount >= stepsLimit)
             {

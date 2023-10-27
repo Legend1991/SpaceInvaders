@@ -18,7 +18,7 @@ namespace SpaceInvaders.Models
             events.Invoke(other);
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             collider.Y += speed;
         }

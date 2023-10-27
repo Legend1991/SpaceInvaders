@@ -4,7 +4,7 @@ using SpaceInvaders.Models.Factories;
 
 namespace SpaceInvaders.Raylib.Factories
 {
-    public class BulletFactory(Display display) : Models.Factories.BulletFactory
+    public class BulletFactory(Display display, Physics physics) : Models.Factories.BulletFactory
     {
         public Bullet Make(Direction direction, int x, int y)
         {
@@ -17,7 +17,11 @@ namespace SpaceInvaders.Raylib.Factories
             var sprite = new Sprite(Sprites.Bullet, collider);
             display.Add(sprite);
 
-            return new Bullet(collider, direction);
+            var bullet = new Bullet(collider, direction);
+
+            physics.Add(bullet);
+
+            return bullet;
         }
     }
 }

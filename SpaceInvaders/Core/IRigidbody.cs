@@ -2,6 +2,6 @@
 {
     public interface IRigidbody
     {
-        void Update();
+        void FixedUpdate();
     }
 }

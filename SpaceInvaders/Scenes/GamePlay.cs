@@ -6,7 +6,7 @@ namespace SpaceInvaders.Scenes
 {
     using CommandBinding = Dictionary<Command, Action>;
 
-    public class GamePlay : Scene
+    public class GamePlay
     {
         private readonly SpaceshipFactory spaceshipFactory;
         private readonly AlienFactory alienFactory;
@@ -14,7 +14,7 @@ namespace SpaceInvaders.Scenes
         private CommandBinding input = new();
         private Score score = new();
 
-        public GamePlay(IDisplay display, SpaceshipFactory spaceshipFactory, AlienFactory alienFactory) : base(display)
+        public GamePlay(SpaceshipFactory spaceshipFactory, AlienFactory alienFactory)
         {
             this.spaceshipFactory = spaceshipFactory;
             this.alienFactory = alienFactory;
@@ -27,23 +27,18 @@ namespace SpaceInvaders.Scenes
         {
             var spaceship = spaceshipFactory.Make(0.5f, 0.9f);
 
-            AddRigidbody(spaceship.Blaster);
-
             input.Add(Command.MoveLeft,  spaceship.Left);
             input.Add(Command.MoveRight, spaceship.Right);
             input.Add(Command.Shoot,     spaceship.Blaster.Trigger);
 
             spaceship.Blaster.OnShot += bullet =>
             {
-                AddRigidbody(bullet);
-
                 bullet.OnHit<Alien>(alien =>
                 {
                     score.Enroll(alien.Value);
                     alien.Destroy();
                 });
                 bullet.OnHit<Obstacle>(obstacle => obstacle.Crumble());
-
             };
 
             spaceship.Destroyed += GameOver;
@@ -66,7 +61,7 @@ namespace SpaceInvaders.Scenes
                 AlienType.Peleng, AlienType.Gaal, AlienType.Gaal, AlienType.Faeyan, AlienType.Faeyan
             };
 
-            for (int row = 0; row < 5; row++)
+            for (int row = 0; row < aliens.Length; row++)
             {
                 for (int column = 0; column < 11; column++)
                 {
@@ -81,13 +76,8 @@ namespace SpaceInvaders.Scenes
         {
             var alien = alienFactory.Make(type, x, y);
 
-            AddRigidbody(alien);
-            AddRigidbody(alien.Blaster);
-
             alien.Blaster.OnShot += bullet =>
             {
-                AddRigidbody(bullet);
-
                 bullet.OnHit<Spaceship>(spaceship => spaceship.Damage());
                 bullet.OnHit<Obstacle>(obstacle => obstacle.Crumble());
             };

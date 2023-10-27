@@ -1,25 +1,25 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class Scene(IDisplay display) : IScene
+    public class Physics
     {
-        protected readonly IDisplay display = display;
         private readonly List<IRigidbody> rigidbodies = new();
 
-        public void AddRigidbody(IRigidbody body)
+        public void Add(IRigidbody body)
         {
             rigidbodies.Add(body);
         }
 
-        public void RemoveRigidbody(IRigidbody body)
+        public void Remove(IRigidbody body)
         {
             rigidbodies.Remove(body);
         }
 
         public void FixedUpdate()
         {
-            foreach (var body in rigidbodies.ToList())
+            for (int i = 0; i < rigidbodies.Count; ++i)
             {
-                body.Update();
+                var body = rigidbodies[i];
+                body.FixedUpdate();
             }
         }
     }

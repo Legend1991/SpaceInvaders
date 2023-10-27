@@ -42,7 +42,7 @@ namespace SpaceInvaders.Models
             return bulletFactory.Make(direction, x, y);
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             ticksToReload = Math.Clamp(ticksToReload - 1, 0, ticksToReload);
         }

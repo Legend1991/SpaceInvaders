@@ -4,9 +4,9 @@ using SpaceInvaders.Models.Factories;
 
 namespace SpaceInvaders.Raylib.Factories
 {
-    public class AlienFactory(Display display) : Models.Factories.AlienFactory
+    public class AlienFactory(Display display, Physics physics) : Models.Factories.AlienFactory
     {
-        private readonly BulletFactory bulletFactory = new(display);
+        private readonly BulletFactory bulletFactory = new(display, physics);
         private readonly Dictionary<AlienType, string> sprites = new()
         {
             { AlienType.Faeyan, Sprites.Faeyan },
@@ -30,6 +30,10 @@ namespace SpaceInvaders.Raylib.Factories
             {
                 Blaster = new Blaster(bulletFactory, collider, GunSlot.BottomCenter)
             };
+
+            physics.Add(alien);
+            physics.Add(alien.Blaster);
+
             return alien;
         }
     }

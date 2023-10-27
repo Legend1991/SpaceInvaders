@@ -24,9 +24,8 @@ namespace SpaceInvaders.Models
         {
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
-            throw new NotImplementedException();
         }
 
         public Blaster Blaster { get; set; }

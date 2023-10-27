@@ -15,13 +15,14 @@ namespace SpaceInvaders
             };
 
             var display          = new Raylib.Display();
-            var spaceshipFactory = new Raylib.Factories.SpaceshipFactory(display);
-            var alienFactory     = new Raylib.Factories.AlienFactory(display);
-            var scene            = new Scenes.GamePlay(display, spaceshipFactory, alienFactory);
+            var physics          = new Core.Physics();
+            var spaceshipFactory = new Raylib.Factories.SpaceshipFactory(display, physics);
+            var alienFactory     = new Raylib.Factories.AlienFactory(display, physics);
+            var scene            = new Scenes.GamePlay(spaceshipFactory, alienFactory);
             var controller       = new Raylib.Keyboard<Command>(keyBinding, scene.CommandBinding);
             var stopwatch        = new System.Stopwatch();
             var timestep         = new Core.Timestep(stopwatch);
-            var game             = new Core.GameLoop(controller, display, scene, timestep);
+            var game             = new Core.GameLoop(controller, display, physics, timestep);
 
             controller.Quit += stopwatch.Stop;
 
