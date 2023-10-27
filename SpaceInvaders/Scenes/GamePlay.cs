@@ -10,9 +10,8 @@ namespace SpaceInvaders.Scenes
     {
         private readonly SpaceshipFactory spaceshipFactory;
         private readonly AlienFactory alienFactory;
-
-        private CommandBinding input = new();
-        private Score score = new();
+        private readonly CommandBinding commandBinding = new();
+        private readonly Score score = new();
 
         public GamePlay(SpaceshipFactory spaceshipFactory, AlienFactory alienFactory)
         {
@@ -27,9 +26,9 @@ namespace SpaceInvaders.Scenes
         {
             var spaceship = spaceshipFactory.Make(0.5f, 0.9f);
 
-            input.Add(Command.MoveLeft,  spaceship.Left);
-            input.Add(Command.MoveRight, spaceship.Right);
-            input.Add(Command.Shoot,     spaceship.Blaster.Trigger);
+            commandBinding.Add(Command.MoveLeft,  spaceship.Left);
+            commandBinding.Add(Command.MoveRight, spaceship.Right);
+            commandBinding.Add(Command.Shoot,     spaceship.Blaster.Trigger);
 
             spaceship.Blaster.OnShot += bullet =>
             {
@@ -46,7 +45,7 @@ namespace SpaceInvaders.Scenes
 
         public CommandBinding CommandBinding
         {
-            get => input;
+            get => commandBinding;
         }
 
         private void GameOver()

@@ -9,7 +9,7 @@ namespace SpaceInvaders.Raylib.Factories
         public Bullet Make(Direction direction, int x, int y)
         {
             var mask = Textures.Mask(Sprites.Bullet);
-            var collider = new CellCollider(mask);
+            var collider = new CellularCollider(mask);
 
             collider.X = x - (collider.Width / 2);
             collider.Y = y - (direction == Direction.Up ? 0 : collider.Height);
@@ -17,7 +17,10 @@ namespace SpaceInvaders.Raylib.Factories
             var sprite = new Sprite(Sprites.Bullet, collider);
             display.Add(sprite);
 
-            var bullet = new Bullet(collider, direction);
+            var bullet = new Bullet(direction)
+            {
+                Collider = collider
+            };
 
             physics.Add(bullet);
 

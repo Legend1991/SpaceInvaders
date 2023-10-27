@@ -21,8 +21,8 @@ namespace Core.CellColliderSpec
         [Test]
         public void WhenCollidersDiverge()
         {
-            var collider1 = new CellCollider(Fixtures.Mask1);
-            var collider2 = new CellCollider(Fixtures.Mask2);
+            var collider1 = new CellularCollider(Fixtures.Mask1);
+            var collider2 = new CellularCollider(Fixtures.Mask2);
 
             collider1.X = 4;
 
@@ -36,8 +36,8 @@ namespace Core.CellColliderSpec
         [Test]
         public void WhenBodiesDiverge()
         {
-            var collider1 = new CellCollider(Fixtures.Mask1);
-            var collider2 = new CellCollider(Fixtures.Mask2);
+            var collider1 = new CellularCollider(Fixtures.Mask1);
+            var collider2 = new CellularCollider(Fixtures.Mask2);
 
             Assert.Multiple(() =>
             {
@@ -52,8 +52,8 @@ namespace Core.CellColliderSpec
         [Test]
         public void WhenBodiesOverlap()
         {
-            var collider1 = new CellCollider(Fixtures.Mask1);
-            var collider2 = new CellCollider(Fixtures.Mask2);
+            var collider1 = new CellularCollider(Fixtures.Mask1);
+            var collider2 = new CellularCollider(Fixtures.Mask2);
 
             collider1.X = 1;
 

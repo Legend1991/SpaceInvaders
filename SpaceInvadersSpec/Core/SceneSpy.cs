@@ -6,11 +6,11 @@ namespace SpaceInvadersSpec.Core
     {
         public int FixedUpdateCallsCount = 0;
 
-        public void AddRigidbody(IRigidbody body)
+        public void AddRigidbody(Rigidbody body)
         {
         }
 
-        public void RemoveRigidbody(IRigidbody body)
+        public void RemoveRigidbody(Rigidbody body)
         {
         }
 

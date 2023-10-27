@@ -2,30 +2,40 @@
 
 namespace SpaceInvaders.Models
 {
-    public class Spaceship(CellCollider collider, int minX, int maxX) : IRigidbody
+    public class Spaceship(int minX, int maxX) : Rigidbody
     {
         public event Action Destroyed;
 
         private readonly int speed = 10;
 
+        private int lives = 3;
+
         public void Left()
         {
-            var nextX = collider.X - speed;
-            collider.X = Math.Clamp(nextX, minX, collider.X);
+            var nextX = Collider.X - speed;
+            Collider.X = Math.Clamp(nextX, minX, Collider.X);
         }
 
         public void Right()
         {
-            var nextX = collider.X + speed;
-            collider.X = Math.Clamp(nextX, collider.X, maxX - collider.Width);
+            var nextX = Collider.X + speed;
+            Collider.X = Math.Clamp(nextX, Collider.X, maxX - Collider.Width);
         }
 
         public void Damage()
         {
-        }
+            lives--;
 
-        public void FixedUpdate()
-        {
+            if (lives > 0)
+            {
+                Console.WriteLine("Warning! Your ship has been damaged!");
+            }
+
+            if (lives == 0)
+            {
+                Console.WriteLine("Your ship has been destroyed!");
+                Destroyed?.Invoke();
+            }
         }
 
         public Blaster Blaster { get; set; }

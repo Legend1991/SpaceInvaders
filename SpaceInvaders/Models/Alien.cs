@@ -2,7 +2,7 @@
 
 namespace SpaceInvaders.Models
 {
-    public class Alien(CellCollider collider) : IRigidbody
+    public class Alien() : Rigidbody
     {
         private readonly int speed = 1;
         private readonly double stepsLimit = 100;
@@ -11,16 +11,16 @@ namespace SpaceInvaders.Models
         private int stepsCount = 50;
         private bool moveRight = true;
 
-        public void FixedUpdate()
+        public override void FixedUpdate()
         {
             if (stepsCount >= stepsLimit)
             {
                 moveRight = !moveRight;
-                collider.Y += 10;
+                Collider.Y += 10;
                 stepsCount = 0;
             }
 
-            collider.X += moveRight ? speed : -speed;
+            Collider.X += moveRight ? speed : -speed;
             stepsCount++;
 
             if (random.NextDouble() <= 0.0005)
@@ -31,10 +31,10 @@ namespace SpaceInvaders.Models
 
         public void Destroy()
         {
+            Console.WriteLine("Alien ship has been destroyed!");
         }
 
         public Blaster Blaster { get; set; }
-
         public int Value { get => 10; }
     }
 }

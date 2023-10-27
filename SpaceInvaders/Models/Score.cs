@@ -7,6 +7,7 @@
         public void Enroll(int change)
         {
             value += change;
+            Console.WriteLine("Score: " + value);
         }
     }
 }

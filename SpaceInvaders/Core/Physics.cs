@@ -1,26 +1,60 @@
 ﻿namespace SpaceInvaders.Core
 {
+    using Rigidbodies = List<Rigidbody>;
+
     public class Physics
     {
-        private readonly List<IRigidbody> rigidbodies = new();
+        private readonly Dictionary<string, Rigidbodies> registry = new();
 
-        public void Add(IRigidbody body)
+        public void Add(Rigidbody body)
         {
-            rigidbodies.Add(body);
+            var typeName = body.GetType().FullName;
+            if (typeName != null)
+            {
+                if (registry.ContainsKey(typeName))
+                {
+                    registry[typeName].Add(body);
+                }
+                else
+                {
+                    registry.Add(typeName, new Rigidbodies { body });
+                }
+            }
         }
 
-        public void Remove(IRigidbody body)
+        public Rigidbodies RigidbodiesBy(string typeName)
         {
-            rigidbodies.Remove(body);
+            if (registry.TryGetValue(typeName, out var rigidbodies))
+            {
+                return rigidbodies;
+            }
+            return new();
+        }
+
+        public void Remove(Rigidbody body)
+        {
+            var typeName = body.GetType().FullName;
+            if (typeName != null)
+            {
+                if (registry.TryGetValue(typeName, out var rigidbodies))
+                {
+                    rigidbodies.Remove(body);
+                }
+            }
         }
 
         public void FixedUpdate()
         {
-            for (int i = 0; i < rigidbodies.Count; ++i)
+            foreach (var body in Rigidbodies)
             {
-                var body = rigidbodies[i];
                 body.FixedUpdate();
+                body.CheckCollisions(this);
             }
+        }
+
+        private Rigidbodies Rigidbodies
+        {
+            get => registry.Values.SelectMany(x => x).ToList();
         }
     }
 }

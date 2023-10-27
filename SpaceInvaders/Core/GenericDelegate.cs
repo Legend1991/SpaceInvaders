@@ -23,12 +23,20 @@
 
         public void Invoke<T>(T obj)
         {
-            var key = typeof(T).FullName;
+            var key = obj?.GetType().FullName;
             if (key != null && events.TryGetValue(key, out var value))
             {
-                var action = (Action<T>)value;
-                action?.Invoke(obj);
+                // var action = (Action<T>)value;
+                // action?.Invoke(obj);
+                value?.DynamicInvoke(obj);
             }
         }
+
+        public void RemoveFor(string typeName)
+        {
+            events.Remove(typeName);
+        }
+
+        public List<string> TypesNames { get => events.Keys.ToList(); }
     }
 }

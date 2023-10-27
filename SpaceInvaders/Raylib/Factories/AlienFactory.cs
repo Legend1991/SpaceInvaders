@@ -17,7 +17,7 @@ namespace SpaceInvaders.Raylib.Factories
         public Alien Make(AlienType type, float x, float y)
         {
             var mask = Textures.Mask(sprites[type]);
-            var collider = new CellCollider(mask)
+            var collider = new CellularCollider(mask)
             {
                 X = Convert.ToInt32(display.Width * x),
                 Y = Convert.ToInt32(display.Height * y)
@@ -26,9 +26,10 @@ namespace SpaceInvaders.Raylib.Factories
 
             display.Add(sprite);
 
-            var alien = new Alien(collider)
+            var alien = new Alien()
             {
-                Blaster = new Blaster(bulletFactory, collider, GunSlot.BottomCenter)
+                Blaster = new Blaster(bulletFactory, collider, GunSlot.BottomCenter),
+                Collider = collider,
             };
 
             physics.Add(alien);

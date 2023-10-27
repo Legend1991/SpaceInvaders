@@ -8,7 +8,7 @@ namespace SpaceInvaders.Models
         TopCenter, BottomCenter
     }
 
-    public class Blaster(BulletFactory bulletFactory, CellCollider attachment, GunSlot gunSlot) : IRigidbody
+    public class Blaster(BulletFactory bulletFactory, CellularCollider attachment, GunSlot gunSlot) : Rigidbody
     {
         public event Action<Bullet>? OnShot;
         private int ticksToReload = 0;
@@ -28,6 +28,11 @@ namespace SpaceInvaders.Models
             return ticksToReload <= 0;
         }
 
+        public override void FixedUpdate()
+        {
+            ticksToReload = Math.Clamp(ticksToReload - 1, 0, ticksToReload);
+        }
+
         private Bullet CreateBulllet()
         {
             var y = gunSlot == GunSlot.TopCenter
@@ -40,11 +45,6 @@ namespace SpaceInvaders.Models
                 : Direction.Down;
 
             return bulletFactory.Make(direction, x, y);
-        }
-
-        public void FixedUpdate()
-        {
-            ticksToReload = Math.Clamp(ticksToReload - 1, 0, ticksToReload);
         }
     }
 }

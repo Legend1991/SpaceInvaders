@@ -2,15 +2,10 @@
 
 namespace SpaceInvaders.Models
 {
-    public class Obstacle : IRigidbody
+    public class Obstacle : Rigidbody
     {
         public void Crumble()
         {
-        }
-
-        public void FixedUpdate()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class CellCollider(bool[,] mask)
+    public class CellularCollider(bool[,] mask)
     {
         private static readonly int AXIS_X = 1;
         private static readonly int AXIS_Y = 0;
@@ -12,7 +12,7 @@
         private int x1 = mask.GetLength(AXIS_X);
         private int y1 = mask.GetLength(AXIS_Y);
 
-        public bool Hits(CellCollider other)
+        public bool Hits(CellularCollider other)
         {
             if (Overlaps(other))
             {
@@ -22,12 +22,12 @@
             return false;
         }
 
-        private bool Overlaps(CellCollider other)
+        private bool Overlaps(CellularCollider other)
         {
             return x0 < other.x1 && y0 < other.y1 && x1 >= other.x0 && y1 >= other.y0;
         }
 
-        private bool TestOverlapArea(CellCollider other)
+        private bool TestOverlapArea(CellularCollider other)
         {
             bool hits = false;
 

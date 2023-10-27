@@ -9,7 +9,7 @@ namespace Models.SpaceshipSpec
         [Test]
         public void Left()
         {
-            var collider = new CellCollider(Fixtures.Mask2) { X = 1, Y = 0 };
+            var collider = new CellularCollider(Fixtures.Mask2) { X = 1, Y = 0 };
             var spaceship = new Spaceship(collider, 0, 5);
 
             spaceship.Left();
@@ -24,7 +24,7 @@ namespace Models.SpaceshipSpec
         [Test]
         public void Right()
         {
-            var collider = new CellCollider(Fixtures.Mask2) { X = 0, Y = 0 };
+            var collider = new CellularCollider(Fixtures.Mask2) { X = 0, Y = 0 };
             var spaceship = new Spaceship(collider, 0, 5);
 
             spaceship.Right();
@@ -42,7 +42,7 @@ namespace Models.SpaceshipSpec
         [Test]
         public void Left()
         {
-            var collider = new CellCollider(Fixtures.Mask2) { X = 0, Y = 0 };
+            var collider = new CellularCollider(Fixtures.Mask2) { X = 0, Y = 0 };
             var spaceship = new Spaceship(collider, 0, 4);
 
             spaceship.Left();
@@ -57,7 +57,7 @@ namespace Models.SpaceshipSpec
         [Test]
         public void Right()
         {
-            var collider = new CellCollider(Fixtures.Mask2) { X = 1, Y = 0 };
+            var collider = new CellularCollider(Fixtures.Mask2) { X = 1, Y = 0 };
             var spaceship = new Spaceship(collider, 0, 5);
 
             spaceship.Right();
