@@ -1,11 +1,12 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class CellularCollider(bool[,] mask)
+    public class CellularCollider(bool[,] mask, bool fragile)
     {
         private static readonly int AXIS_X = 1;
         private static readonly int AXIS_Y = 0;
 
         private readonly bool[,] mask = mask;
+        private readonly bool fragile = fragile;
 
         private int x0 = 0;
         private int y0 = 0;
@@ -50,6 +51,16 @@
                     if (mask[thisY, thisX] && other.mask[otherY, otherX])
                     {
                         hits = true;
+
+                        if (fragile)
+                        {
+                            mask[thisY, thisX] = false;
+                        }
+
+                        if (other.fragile)
+                        {
+                            other.mask[thisY, thisX] = false;
+                        }
                     }
                 }
             }

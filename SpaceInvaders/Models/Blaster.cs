@@ -35,9 +35,8 @@ namespace SpaceInvaders.Models
 
         private Bullet CreateBulllet()
         {
-            var y = gunSlot == GunSlot.TopCenter
-                ? ownerCollider.Y
-                : ownerCollider.Y + ownerCollider.Height;
+            var y = ownerCollider.Y;
+            y += gunSlot == GunSlot.TopCenter ? 0 : ownerCollider.Height;
             var x = ownerCollider.X + ownerCollider.Width / 2;
 
             var direction = gunSlot == GunSlot.TopCenter

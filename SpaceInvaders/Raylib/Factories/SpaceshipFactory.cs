@@ -10,7 +10,7 @@ namespace SpaceInvaders.Raylib.Factories
         public Spaceship Make(float x, float y)
         {
             var mask = Textures.Mask(Sprites.Spaceship);
-            var collider = new CellularCollider(mask) {
+            var collider = new CellularCollider(mask, false) {
                 X = Convert.ToInt32(display.Width * x),
                 Y = Convert.ToInt32(display.Height * y)
             };

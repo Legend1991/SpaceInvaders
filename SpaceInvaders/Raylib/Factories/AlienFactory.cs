@@ -17,7 +17,7 @@ namespace SpaceInvaders.Raylib.Factories
         public Alien Make(AlienType type, float x, float y)
         {
             var mask = Textures.Mask(sprites[type]);
-            var collider = new CellularCollider(mask)
+            var collider = new CellularCollider(mask, false)
             {
                 X = Convert.ToInt32(display.Width * x),
                 Y = Convert.ToInt32(display.Height * y)

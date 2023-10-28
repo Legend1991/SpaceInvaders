@@ -10,16 +10,19 @@ namespace SpaceInvaders.Scenes
     {
         private readonly SpaceshipFactory spaceshipFactory;
         private readonly AlienFactory alienFactory;
+        private readonly ObstacleFactory obstacleFactory;
         private readonly CommandBinding commandBinding = new();
         private readonly Score score = new();
 
-        public GamePlay(SpaceshipFactory spaceshipFactory, AlienFactory alienFactory)
+        public GamePlay(SpaceshipFactory spaceshipFactory, AlienFactory alienFactory, ObstacleFactory obstacleFactory)
         {
             this.spaceshipFactory = spaceshipFactory;
             this.alienFactory = alienFactory;
+            this.obstacleFactory = obstacleFactory;
 
             SpawnSpaceship();
             SpawnIntruders();
+            SetupObstacles();
         }
 
         private void SpawnSpaceship()
@@ -80,6 +83,13 @@ namespace SpaceInvaders.Scenes
                 bullet.OnHit<Spaceship>(spaceship => spaceship.Damage());
                 bullet.OnHit<Obstacle>(obstacle => obstacle.Crumble());
             };
+        }
+
+        private void SetupObstacles()
+        {
+            obstacleFactory.Make(0.1f, 0.8f);
+            obstacleFactory.Make(0.45f, 0.8f);
+            obstacleFactory.Make(0.8f, 0.8f);
         }
     }
 }
