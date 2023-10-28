@@ -11,5 +11,10 @@ namespace SpaceInvaders.Models
         {
             Collider.Y += speed;
         }
+
+        protected override void Hit()
+        {
+            Destroy();
+        }
     }
 }

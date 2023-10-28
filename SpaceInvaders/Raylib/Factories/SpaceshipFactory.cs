@@ -15,17 +15,22 @@ namespace SpaceInvaders.Raylib.Factories
                 Y = Convert.ToInt32(display.Height * y)
             };
             var sprite = new Sprite(Sprites.Spaceship, collider);
-
-            display.Add(sprite);
-
             var spaceship = new Spaceship(0, display.Width)
             {
                 Blaster = new Blaster(bulletFactory, collider, GunSlot.TopCenter),
                 Collider = collider,
             };
 
+            display.Add(sprite);
             physics.Add(spaceship);
             physics.Add(spaceship.Blaster);
+
+            spaceship.Destroyed += () =>
+            {
+                display.Remove(sprite);
+                physics.Remove(spaceship);
+                physics.Remove(spaceship.Blaster);
+            };
 
             return spaceship;
         }

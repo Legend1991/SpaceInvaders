@@ -4,8 +4,6 @@ namespace SpaceInvaders.Models
 {
     public class Spaceship(int minX, int maxX) : Rigidbody
     {
-        public event Action Destroyed;
-
         private readonly int speed = 10;
 
         private int lives = 3;
@@ -34,7 +32,8 @@ namespace SpaceInvaders.Models
             if (lives == 0)
             {
                 Console.WriteLine("Your ship has been destroyed!");
-                Destroyed?.Invoke();
+                Destroy();
+                Blaster.Destroy();
             }
         }
 

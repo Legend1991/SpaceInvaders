@@ -2,7 +2,14 @@
 {
     public class Rigidbody
     {
+        public event Action Destroyed;
+
         private readonly GenericDelegate hit = new();
+
+        public Rigidbody()
+        {
+            Exists = true;
+        }
 
         public virtual void FixedUpdate() {}
 
@@ -21,12 +28,24 @@
                     {
                         hit.Invoke(other);
                         hit.RemoveFor(typeName);
+                        Hit();
                         return;
                     }
                 }
             }
         }
 
+        public void Destroy()
+        {
+            Exists = false;
+            Destroyed?.Invoke();
+        }
+
+        protected virtual void Hit()
+        {
+        }
+
         public CellularCollider Collider { get; set; }
+        public bool Exists { get; private set; }
     }
 }

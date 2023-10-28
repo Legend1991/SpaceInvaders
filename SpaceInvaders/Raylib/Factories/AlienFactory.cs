@@ -23,17 +23,22 @@ namespace SpaceInvaders.Raylib.Factories
                 Y = Convert.ToInt32(display.Height * y)
             };
             var sprite = new Sprite(sprites[type], collider);
-
-            display.Add(sprite);
-
             var alien = new Alien()
             {
                 Blaster = new Blaster(bulletFactory, collider, GunSlot.BottomCenter),
                 Collider = collider,
             };
 
+            display.Add(sprite);
             physics.Add(alien);
             physics.Add(alien.Blaster);
+
+            alien.Destroyed += () =>
+            {
+                display.Remove(sprite);
+                physics.Remove(alien);
+                physics.Remove(alien.Blaster);
+            };
 
             return alien;
         }

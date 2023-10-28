@@ -11,11 +11,12 @@ namespace SpaceInvaders.Models
     public class Blaster(BulletFactory bulletFactory, CellularCollider ownerCollider, GunSlot gunSlot) : Rigidbody
     {
         public event Action<Bullet>? OnShot;
+
         private int ticksToReload = 0;
 
         public void Trigger()
         {
-            if (Reloaded())
+            if (Exists && Reloaded())
             {
                 var bullet = CreateBulllet();
                 OnShot?.Invoke(bullet);

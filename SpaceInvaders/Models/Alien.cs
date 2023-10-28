@@ -2,7 +2,7 @@
 
 namespace SpaceInvaders.Models
 {
-    public class Alien() : Rigidbody
+    public class Alien : Rigidbody
     {
         private readonly int speed = 1;
         private readonly double stepsLimit = 100;
@@ -27,11 +27,6 @@ namespace SpaceInvaders.Models
             {
                 Blaster?.Trigger();
             }
-        }
-
-        public void Destroy()
-        {
-            Console.WriteLine("Alien ship has been destroyed!");
         }
 
         public Blaster Blaster { get; set; }

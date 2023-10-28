@@ -6,13 +6,15 @@ using Texture2D = Raylib_cs.Texture2D;
 
 namespace SpaceInvaders.Raylib
 {
-    public class Sprite(string spriteFileName, CellularCollider collider)
+    public class Sprite
     {
-        private Texture2D texture;
+        private readonly Texture2D texture;
+        private readonly CellularCollider collider;
 
-        public void Init()
+        public Sprite(string spriteFileName, CellularCollider collider)
         {
             texture = Textures.Load(spriteFileName);
+            this.collider = collider;
         }
 
         public void Draw()

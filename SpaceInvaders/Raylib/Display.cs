@@ -17,8 +17,12 @@ namespace SpaceInvaders.Raylib
 
         public void Add(Sprite sprite)
         {
-            sprite.Init();
             sprites.Add(sprite);
+        }
+
+        public void Remove(Sprite sprite)
+        {
+            sprites.Remove(sprite);
         }
 
         public void Render()

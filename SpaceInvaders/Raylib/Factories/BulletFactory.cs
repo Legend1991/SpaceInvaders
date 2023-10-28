@@ -15,14 +15,19 @@ namespace SpaceInvaders.Raylib.Factories
             collider.Y = y - (direction == Direction.Up ? 0 : collider.Height);
 
             var sprite = new Sprite(Sprites.Bullet, collider);
-            display.Add(sprite);
-
             var bullet = new Bullet(direction)
             {
                 Collider = collider
             };
 
+            display.Add(sprite);
             physics.Add(bullet);
+
+            bullet.Destroyed += () =>
+            {
+                display.Remove(sprite);
+                physics.Remove(bullet);
+            };
 
             return bullet;
         }
