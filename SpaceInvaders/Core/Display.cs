@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public interface IDisplay
+    public interface Display
     {
         void Render();
 

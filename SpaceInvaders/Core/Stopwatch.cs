@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public interface IStopwatch
+    public interface Stopwatch
     {
         void Start();
         void Stop();

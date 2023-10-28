@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public interface IController
+    public interface Controller
     {
         void Interrupt();
     }

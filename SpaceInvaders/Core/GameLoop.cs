@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class GameLoop(IController controller, IDisplay display, Physics physics, Timestep timestep)
+    public class GameLoop(Controller controller, Display display, Physics physics, Timestep timestep)
     {
         public void Run()
         {

@@ -1,9 +1,8 @@
 ﻿using DotNet = System.Diagnostics;
-using SpaceInvaders.Core;
 
 namespace SpaceInvaders.System
 {
-    public class Stopwatch : IStopwatch
+    public class Stopwatch : Core.Stopwatch
     {
         private readonly DotNet.Stopwatch stopwatch = new();
 

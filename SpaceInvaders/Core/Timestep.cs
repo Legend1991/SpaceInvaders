@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class Timestep(IStopwatch stopwatch)
+    public class Timestep(Stopwatch stopwatch)
     {
         // The fixed timestep of the physics system [50 fps]
         private const double fixedDeltaTime = 20;

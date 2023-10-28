@@ -2,7 +2,7 @@
 
 namespace SpaceInvadersSpec.Core
 {
-    public class StopwatchFake(double timestepDelay, int maxCyclesCount) : IStopwatch
+    public class StopwatchFake(double timestepDelay, int maxCyclesCount) : Stopwatch
     {
         private double elapsed = 0;
         private int cyclesCount = 0;

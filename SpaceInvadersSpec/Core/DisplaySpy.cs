@@ -2,7 +2,7 @@
 
 namespace SpaceInvadersSpec.Core
 {
-    public class DisplaySpy : IDisplay
+    public class DisplaySpy : Display
     {
         public int RenderCallsCount = 0;
 

@@ -1,12 +1,10 @@
-﻿using SpaceInvaders.Core;
-
-using RaylibCS = Raylib_cs.Raylib;
+﻿using RaylibCS = Raylib_cs.Raylib;
 using ConfigFlags = Raylib_cs.ConfigFlags;
 using Color = Raylib_cs.Color;
 
 namespace SpaceInvaders.Raylib
 {
-    public class Display : IDisplay
+    public class Display : Core.Display
     {
         private readonly List<Sprite> sprites = new();
 
