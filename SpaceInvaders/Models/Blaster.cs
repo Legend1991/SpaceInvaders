@@ -8,7 +8,7 @@ namespace SpaceInvaders.Models
         TopCenter, BottomCenter
     }
 
-    public class Blaster(BulletFactory bulletFactory, CellularCollider attachment, GunSlot gunSlot) : Rigidbody
+    public class Blaster(BulletFactory bulletFactory, CellularCollider ownerCollider, GunSlot gunSlot) : Rigidbody
     {
         public event Action<Bullet>? OnShot;
         private int ticksToReload = 0;
@@ -36,9 +36,9 @@ namespace SpaceInvaders.Models
         private Bullet CreateBulllet()
         {
             var y = gunSlot == GunSlot.TopCenter
-                ? attachment.Y
-                : attachment.Y + attachment.Height;
-            var x = attachment.X + attachment.Width / 2;
+                ? ownerCollider.Y
+                : ownerCollider.Y + ownerCollider.Height;
+            var x = ownerCollider.X + ownerCollider.Width / 2;
 
             var direction = gunSlot == GunSlot.TopCenter
                 ? Direction.Up
