@@ -4,7 +4,7 @@
     {
         void Start();
         void Stop();
-        bool Running();
+        bool IsRunning();
         double Elapsed();
     }
 }

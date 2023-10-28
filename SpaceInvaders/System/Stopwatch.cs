@@ -22,7 +22,7 @@ namespace SpaceInvaders.System
             stopwatch.Stop();
         }
 
-        public bool Running()
+        public bool IsRunning()
         {
             return stopwatch.IsRunning;
         }

@@ -21,7 +21,7 @@
             accumulator += now - lastUpdate;
             lastUpdate = now;
             now = stopwatch.Elapsed();
-            return stopwatch.Running();
+            return stopwatch.IsRunning();
         }
 
         public bool FixedTick()

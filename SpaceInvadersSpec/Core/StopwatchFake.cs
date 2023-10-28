@@ -24,7 +24,7 @@ namespace SpaceInvadersSpec.Core
             throw new NotImplementedException();
         }
 
-        public bool Running()
+        public bool IsRunning()
         {
             return cyclesCount <= maxCyclesCount;
         }
