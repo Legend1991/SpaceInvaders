@@ -34,11 +34,13 @@
         public void Remove(Rigidbody body)
         {
             var typeName = body.GetType().FullName;
-            if (typeName != null)
+            if (typeName != null && registry.TryGetValue(typeName, out var rigidbodies))
             {
-                if (registry.TryGetValue(typeName, out var rigidbodies))
+                rigidbodies.Remove(body);
+
+                if (rigidbodies.Count == 0)
                 {
-                    rigidbodies.Remove(body);
+                    registry.Remove(typeName);
                 }
             }
         }
