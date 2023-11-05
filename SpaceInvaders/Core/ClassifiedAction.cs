@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class GenericDelegate
+    public class ClassifiedAction
     {
         public Dictionary<string, Delegate> events = new();
 

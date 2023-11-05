@@ -4,7 +4,7 @@
     {
         public event Action Destroyed;
 
-        private readonly GenericDelegate hit = new();
+        private readonly ClassifiedAction hit = new();
 
         public Rigidbody()
         {
