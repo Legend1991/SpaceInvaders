@@ -29,6 +29,10 @@
                         hit.Invoke(other);
                         hit.RemoveFor(typeName);
                         Hit();
+                    }
+
+                    if (Exists == false)
+                    {
                         return;
                     }
                 }
