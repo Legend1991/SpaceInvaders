@@ -1,6 +1,8 @@
-﻿namespace SpaceInvaders.Core
+﻿using System.Diagnostics;
+
+namespace SpaceInvaders.Core
 {
-    public class CellularCollider(bool[,] mask, bool fragile = false)
+    public class CellularCollider(bool[,] mask, bool fragile = false) : Collider
     {
         private static readonly int AXIS_X = 1;
         private static readonly int AXIS_Y = 0;
@@ -15,11 +17,13 @@
 
         private readonly List<Vector2> disabledCells = [];
 
-        public bool Hits(CellularCollider other)
+        public bool Hits(Collider other)
         {
-            if (Overlaps(other))
+            if (other is not CellularCollider) return false;
+
+            if (Overlaps((CellularCollider)other))
             {
-                return TestOverlappingArea(other);
+                return TestOverlappingArea((CellularCollider)other);
             }
 
             return false;

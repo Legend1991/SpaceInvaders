@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class ClassifiedAction
+    public class TypedAction
     {
         public Dictionary<string, Delegate> events = [];
 

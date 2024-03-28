@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-
-namespace SpaceInvaders.Core
+﻿namespace SpaceInvaders.Core
 {
     public class Timestep(Stopwatch stopwatch, double fixedDeltaTime)
     {

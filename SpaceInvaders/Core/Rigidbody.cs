@@ -4,7 +4,7 @@
     {
         public event Action? Destroyed;
 
-        private readonly ClassifiedAction hit = new();
+        private readonly TypedAction hit = new();
 
         public virtual void FixedUpdate() {}
 
@@ -17,10 +17,14 @@
 
         public void CheckCollisions(Physics physics)
         {
+            if (Collider == null) return;
+
             foreach (var typeName in hit.TypesNames)
             {
                 foreach (var other in physics.RigidbodiesBy(typeName))
                 {
+                    if (other.Collider == null) continue;
+
                     if (Collider.Hits(other.Collider))
                     {
                         hit.Invoke(other);
@@ -44,7 +48,7 @@
 
         protected virtual void Hit() {}
 
-        public CellularCollider Collider { get; set; }
+        public CellularCollider? Collider { get; set; }
 
         public bool Exists { get; private set; } = true;
     }

@@ -21,7 +21,7 @@ namespace SpaceInvaders.Scenes
             this.obstacleFactory = obstacleFactory;
 
             SpawnSpaceship();
-            SpawnIntruders();
+            SpawnAlienArmy();
             SetupObstacles();
         }
 
@@ -56,7 +56,7 @@ namespace SpaceInvaders.Scenes
             Console.WriteLine("Game over!");
         }
 
-        private void SpawnIntruders()
+        private void SpawnAlienArmy()
         {
             var aliens = new AlienType[]
             {
