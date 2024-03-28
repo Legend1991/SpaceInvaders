@@ -2,16 +2,15 @@
 {
     public class ClassifiedAction
     {
-        public Dictionary<string, Delegate> events = new();
+        public Dictionary<string, Delegate> events = [];
 
         public void Add<T>(Action<T> action)
         {
             var key = typeof(T).FullName;
             if (key != null)
             {
-                if (events.ContainsKey(key))
+                if (events.TryGetValue(key, out var current))
                 {
-                    var current = events[key];
                     events[key] = Delegate.Combine(current, action);
                 }
                 else

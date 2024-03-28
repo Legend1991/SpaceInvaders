@@ -4,20 +4,23 @@
 
     public class Physics
     {
-        private readonly Dictionary<string, Rigidbodies> registry = new();
+        // The fixed timestep of the physics system in milliseconds [20ms = 50fps]
+        public static readonly double FixedDeltaTime = 20;
+
+        private readonly Dictionary<string, Rigidbodies> registry = [];
 
         public void Add(Rigidbody body)
         {
             var typeName = body.GetType().FullName;
             if (typeName != null)
             {
-                if (registry.ContainsKey(typeName))
+                if (registry.TryGetValue(typeName, out Rigidbodies? value))
                 {
-                    registry[typeName].Add(body);
+                    value.Add(body);
                 }
                 else
                 {
-                    registry.Add(typeName, new Rigidbodies { body });
+                    registry.Add(typeName, [body]);
                 }
             }
         }
@@ -28,7 +31,7 @@
             {
                 return rigidbodies;
             }
-            return new();
+            return [];
         }
 
         public void Remove(Rigidbody body)
@@ -50,6 +53,15 @@
             foreach (var body in Rigidbodies)
             {
                 body.FixedUpdate();
+                body.CheckCollisions(this);
+            }
+        }
+
+        public void Update(double deltaTime)
+        {
+            foreach (var body in Rigidbodies)
+            {
+                body.Update(deltaTime);
                 body.CheckCollisions(this);
             }
         }

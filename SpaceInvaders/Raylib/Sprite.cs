@@ -8,7 +8,7 @@ namespace SpaceInvaders.Raylib
 {
     public class Sprite
     {
-        private readonly Texture2D texture;
+        private Texture2D texture;
         private readonly CellularCollider collider;
 
         public Sprite(string spriteFileName, CellularCollider collider)
@@ -20,6 +20,11 @@ namespace SpaceInvaders.Raylib
         public void Draw()
         {
             RaylibCS.DrawTexture(texture, collider.X, collider.Y, Color.WHITE);
+
+            foreach (var cell in collider.DisabledCells)
+            {
+                RaylibCS.DrawPixel(collider.X + cell.X, collider.Y + cell.Y, Color.BLACK);
+            }
         }
     }
 }

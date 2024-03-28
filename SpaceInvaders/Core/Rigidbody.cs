@@ -2,16 +2,13 @@
 {
     public class Rigidbody
     {
-        public event Action Destroyed;
+        public event Action? Destroyed;
 
         private readonly ClassifiedAction hit = new();
 
-        public Rigidbody()
-        {
-            Exists = true;
-        }
-
         public virtual void FixedUpdate() {}
+
+        public virtual void Update(double deltaTime) {}
 
         public void OnHit<T>(Action<T> action)
         {
@@ -45,11 +42,10 @@
             Destroyed?.Invoke();
         }
 
-        protected virtual void Hit()
-        {
-        }
+        protected virtual void Hit() {}
 
         public CellularCollider Collider { get; set; }
-        public bool Exists { get; private set; }
+
+        public bool Exists { get; private set; } = true;
     }
 }

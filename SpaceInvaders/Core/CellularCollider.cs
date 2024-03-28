@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvaders.Core
 {
-    public class CellularCollider(bool[,] mask, bool fragile)
+    public class CellularCollider(bool[,] mask, bool fragile = false)
     {
         private static readonly int AXIS_X = 1;
         private static readonly int AXIS_Y = 0;
@@ -13,11 +13,13 @@
         private int x1 = mask.GetLength(AXIS_X);
         private int y1 = mask.GetLength(AXIS_Y);
 
+        private readonly List<Vector2> disabledCells = [];
+
         public bool Hits(CellularCollider other)
         {
             if (Overlaps(other))
             {
-                return TestOverlapArea(other);
+                return TestOverlappingArea(other);
             }
 
             return false;
@@ -28,7 +30,7 @@
             return x0 < other.x1 && y0 < other.y1 && x1 >= other.x0 && y1 >= other.y0;
         }
 
-        private bool TestOverlapArea(CellularCollider other)
+        private bool TestOverlappingArea(CellularCollider other)
         {
             bool hits = false;
 
@@ -55,11 +57,13 @@
                         if (fragile)
                         {
                             mask[thisY, thisX] = false;
+                            disabledCells.Add(new Vector2(thisX, thisY));
                         }
 
                         if (other.fragile)
                         {
-                            other.mask[thisY, thisX] = false;
+                            other.mask[otherY, otherX] = false;
+                            other.disabledCells.Add(new Vector2(otherX, otherY));
                         }
                     }
                 }
@@ -88,14 +92,10 @@
             }
         }
 
-        public int Width
-        {
-            get => mask.GetLength(AXIS_X);
-        }
+        public int Width { get => mask.GetLength(AXIS_X); }
 
-        public int Height
-        {
-            get => mask.GetLength(AXIS_Y);
-        }
+        public int Height { get => mask.GetLength(AXIS_Y); }
+
+        public List<Vector2> DisabledCells { get => disabledCells; }
     }
 }

@@ -34,6 +34,11 @@ namespace SpaceInvaders.Models
             ticksToReload = Math.Clamp(ticksToReload - 1, 0, ticksToReload);
         }
 
+        public override void Update(double deltaTime)
+        {
+            //ticksToReload = Math.Clamp(ticksToReload - (1 * (deltaTime / 20.0f)), 0, ticksToReload);
+        }
+
         private Bullet CreateBulllet()
         {
             var y = ownerCollider.Y;

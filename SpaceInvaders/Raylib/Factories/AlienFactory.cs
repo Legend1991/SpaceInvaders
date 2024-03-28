@@ -9,9 +9,9 @@ namespace SpaceInvaders.Raylib.Factories
         private readonly BulletFactory bulletFactory = new(display, physics);
         private readonly Dictionary<AlienType, string> sprites = new()
         {
-            { AlienType.Faeyan, Sprites.Faeyan },
-            { AlienType.Gaal,   Sprites.Gaal },
-            { AlienType.Peleng, Sprites.Peleng }
+            { AlienType.Faeyan, Assets.FaeyanSprite },
+            { AlienType.Gaal,   Assets.GaalSprite },
+            { AlienType.Peleng, Assets.PelengSprite }
         };
 
         public Alien Make(AlienType type, float x, float y)

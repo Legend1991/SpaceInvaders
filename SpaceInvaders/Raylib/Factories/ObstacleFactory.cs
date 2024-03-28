@@ -7,12 +7,12 @@ namespace SpaceInvaders.Raylib.Factories
     {
         public Obstacle Make(float x, float y)
         {
-            var mask = Textures.Mask(Sprites.Obstacle);
+            var mask = Textures.Mask(Assets.ObstacleSprite);
             var collider = new CellularCollider(mask, true) {
                 X = Convert.ToInt32(display.Width * x),
                 Y = Convert.ToInt32(display.Height * y)
             };
-            var sprite = new Sprite(Sprites.Obstacle, collider);
+            var sprite = new Sprite(Assets.ObstacleSprite, collider);
 
             display.Add(sprite);
 

@@ -12,7 +12,7 @@ namespace SpaceInvaders.Raylib
         {
             RaylibCS.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
             RaylibCS.InitWindow(Width, Height, "Space Invaders");
-            RaylibCS.SetWindowIcon(RaylibCS.LoadImage(Sprites.Faeyan));
+            RaylibCS.SetWindowIcon(RaylibCS.LoadImage(Assets.FaeyanSprite));
         }
 
         public void Add(Sprite sprite)

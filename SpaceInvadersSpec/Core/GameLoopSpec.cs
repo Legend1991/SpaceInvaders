@@ -8,7 +8,7 @@ namespace Core.GameLoopSpec
         [TestCase(25,  50, TestName = "Update twice per rendering frame when 25 fps")]
         [TestCase(50,  50, TestName = "One update per rendering frame when 50 fps")]
         [TestCase(100, 50, TestName = "Two rendering frames with one update when 100 fps")]
-        public void UpdateFrequencyRemainsTheSameRegardlessOfFPS(int fps, int fixedCallsCount)
+        public void RemainsTheSameRegardlessOfFPS(int fps, int fixedCallsCount)
         {
             // One extra render cycle is required because the fixed update is skipped during the first one
             var expectedRenderCallsCount = fps + 1;

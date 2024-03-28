@@ -8,13 +8,13 @@ namespace SpaceInvaders.Raylib.Factories
     {
         public Bullet Make(Direction direction, int x, int y)
         {
-            var mask = Textures.Mask(Sprites.Bullet);
+            var mask = Textures.Mask(Assets.BulletSprite);
             var collider = new CellularCollider(mask, false);
 
             collider.X = x - (collider.Width / 2);
             collider.Y = y - (direction == Direction.Up ? 0 : collider.Height);
 
-            var sprite = new Sprite(Sprites.Bullet, collider);
+            var sprite = new Sprite(Assets.BulletSprite, collider);
             var bullet = new Bullet(direction)
             {
                 Collider = collider

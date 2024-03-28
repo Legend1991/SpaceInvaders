@@ -14,6 +14,7 @@
                     physics.FixedUpdate();
                 }
 
+                //physics.Update(timestep.DeltaTime);
                 display.Render();
             }
         }

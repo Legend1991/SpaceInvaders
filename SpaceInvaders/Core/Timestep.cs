@@ -1,10 +1,9 @@
-﻿namespace SpaceInvaders.Core
-{
-    public class Timestep(Stopwatch stopwatch)
-    {
-        // The fixed timestep of the physics system [50 fps]
-        private const double fixedDeltaTime = 20;
+﻿using Microsoft.Win32;
 
+namespace SpaceInvaders.Core
+{
+    public class Timestep(Stopwatch stopwatch, double fixedDeltaTime)
+    {
         private double now = 0;
         private double lastUpdate = 0;
         private double accumulator = 0;
@@ -33,5 +32,7 @@
             }
             return false;
         }
+
+        public double DeltaTime { get => now - lastUpdate; }
     }
 }

@@ -22,7 +22,7 @@ namespace SpaceInvaders
             var scene            = new Scenes.GamePlay(spaceshipFactory, alienFactory, obstacleFactory);
             var controller       = new Raylib.Keyboard<Command>(keyBinding, scene.CommandBinding);
             var stopwatch        = new System.Stopwatch();
-            var timestep         = new Core.Timestep(stopwatch);
+            var timestep         = new Core.Timestep(stopwatch, Core.Physics.FixedDeltaTime);
             var game             = new Core.GameLoop(controller, display, physics, timestep);
 
             controller.Quit += stopwatch.Stop;
